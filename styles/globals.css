@@ -19,11 +19,11 @@ h1{
 }
 
 label{
-    @apply text-blue-900 mb-1;
+    @apply text-blue-900 mb-1 font-bold ;
 }
 
 .btn-primary{
-    @apply bg-blue-900 mt-2 px-4 py-1 rounded-md text-white;
+    @apply bg-blue-900  px-4 py-1 rounded-md text-white;
 }
 
 table.basic{
