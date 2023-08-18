@@ -9,8 +9,6 @@ export default function Categories() {
     ev.preventDefault();
     try {
       await axios.post("/api/categories", { name });
-
-      await axios.post("/api/products", data);
     } catch (error) {
       console.log(error);
     }
