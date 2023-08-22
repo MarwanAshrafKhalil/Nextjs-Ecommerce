@@ -1,9 +1,9 @@
-# Nextjs-Ecommerce
+# Nextjs-Ecommerce <br />
 
-The project is still in building phase
+The project is in the building phase <br />
 
-Milestones:
-Admin Panel - Products Management  🟢
-Admin Panel - Categories Management ⌛
-Admin Panel - Security 
-Store Front
+Milestones: <br />
+Admin Panel - Products Management  🟢 <br />
+Admin Panel - Categories Management ⌛ <br />
+Admin Panel - Security  <br />
+Store Front <br />
