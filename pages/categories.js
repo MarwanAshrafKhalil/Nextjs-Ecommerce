@@ -1,11 +1,13 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
+import { set } from "mongoose";
 import { useEffect, useState } from "react";
 
 export default function Categories() {
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
   const [parentCategory, setParentCategory] = useState("");
+  const [editedCategory,setEditedCategory] =useState(null)
 
   useEffect(() => {
     fetchCategories();
@@ -19,6 +21,7 @@ export default function Categories() {
       });
     } catch (error) {
       console.log(error);
+      
     }
   }
 
@@ -31,10 +34,19 @@ export default function Categories() {
   function printDebugging(x) {
     console.log("length", x);
   }
+  function editCategory(category){
+    setEditedCategory(category)
+
+
+
+  }
+  function deleteCategory(){
+
+  }
   return (
     <Layout>
       <h1>Categories </h1>
-      <label>New Category Name</label>
+      <label>{editedCategory? `Edit Category ${editedCategory.name}` : "New Category Name"}</label>
 
       <form onSubmit={saveCategory} className="flex gap-1">
         <input
@@ -68,6 +80,8 @@ export default function Categories() {
           <tr>
             <td>Categories</td>
             <td>Parent Categorey</td>
+            <td></td>
+
           </tr>
         </thead>
         <tbody>
@@ -75,7 +89,10 @@ export default function Categories() {
             categories.map((category) => (
               <tr key={category._id}>
                 <td>{category.name}</td>
-                <td>{category?.parent?.name}</td>
+                <td>{category?.parent?.name} </td>
+                 <td><button className="btn-primary mr-1" onClick={editCategory(category)}>Edit</button>
+                 <button className="btn-primary" >Delete</button></td>
+
               </tr>
             ))}
         </tbody>
