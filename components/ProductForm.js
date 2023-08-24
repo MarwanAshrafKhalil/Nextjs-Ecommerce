@@ -1,7 +1,7 @@
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
 
@@ -11,6 +11,7 @@ export default function ProductForm({
   description: existingDescription,
   price: existingPrice,
   images: existingImages,
+  category: existingCategory,
 }) {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
@@ -18,11 +19,24 @@ export default function ProductForm({
   const [images, setImages] = useState(existingImages || []);
   const [isUpdating, setIsUpdating] = useState(false);
   const [goToProducts, setGoToProducts] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState(existingCategory || "");
   const router = useRouter();
+
+  useEffect(() => {
+    try {
+      axios.get("/api/categories").then((result) => {
+        setCategories(result.data);
+        console.log("REs-prod: ", result.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   async function saveProduct(ev) {
     ev.preventDefault();
-    const data = { title, description, price, images };
+    const data = { title, description, price, images, category };
 
     try {
       if (_id) {
@@ -77,6 +91,16 @@ export default function ProductForm({
         value={title}
         onChange={(ev) => setTitle(ev.target.value)}
       />
+      <label>Category</label>
+      <select value={category} onChange={(ev) => setCategory(ev.target.value)}>
+        <option value="">Select a category</option>
+        {categories.length > 0 &&
+          categories.map((c) => (
+            <option key={c._id} value={c._id}>
+              {c.name}
+            </option>
+          ))}
+      </select>
 
       <label>Photos</label>
       <div className=" items-center gap-1 flex flex-wrap mb-2">
