@@ -2,9 +2,9 @@ E-commerce project using Nextjs <br />
 
 The project is in the building phase <br />
 
-## Admin side ![](https://geps.dev/progress/50) :
+## Admin side ![](https://geps.dev/progress/55) :
 Products Management  &nbsp; &nbsp;    ![](https://geps.dev/progress/100) <br />
-Categories Management  &nbsp; &nbsp;   ![](https://geps.dev/progress/50) <br />
+Categories Management  &nbsp; &nbsp;   ![](https://geps.dev/progress/650) <br />
 Security  &nbsp; &nbsp;   ![](https://geps.dev/progress/0) <br />
 
 ## User side ![](https://geps.dev/progress/0):  <br />
