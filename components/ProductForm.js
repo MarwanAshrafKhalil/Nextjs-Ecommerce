@@ -12,10 +12,14 @@ export default function ProductForm({
   price: existingPrice,
   images: existingImages,
   category: existingCategory,
+  properties: existingProperties,
 }) {
   const [title, setTitle] = useState(existingTitle || "");
   const [description, setDescription] = useState(existingDescription || "");
   const [price, setPrice] = useState(existingPrice || "");
+  const [productProperties, setProductProperties] = useState(
+    existingProperties || {}
+  );
   const [images, setImages] = useState(existingImages || []);
   const [isUpdating, setIsUpdating] = useState(false);
   const [goToProducts, setGoToProducts] = useState(false);
@@ -36,7 +40,14 @@ export default function ProductForm({
 
   async function saveProduct(ev) {
     ev.preventDefault();
-    const data = { title, description, price, images, category };
+    const data = {
+      title,
+      description,
+      price,
+      images,
+      category,
+      properties: productProperties,
+    };
 
     try {
       if (_id) {
@@ -82,6 +93,36 @@ export default function ProductForm({
     setImages(images);
   }
 
+  function prodProperties(propName, value) {
+    setProductProperties((prev) => {
+      const prodProp = { ...prev };
+      prodProp[propName] = value;
+      return prodProp;
+    });
+  }
+
+  function printInstant(x) {
+    console.log("print: ", x);
+    console.log("print1: ", { ...prodProperties });
+  }
+
+  const propertiesToFill = [];
+  if (categories.length > 0 && category) {
+    let catInfo = categories.find(({ _id }) => _id === category);
+    propertiesToFill.push(...catInfo.properties);
+    while (catInfo?.parent?._id) {
+      const parentCat = categories.find(
+        ({ _id }) => _id === catInfo.parent._id
+      );
+      propertiesToFill.push(...parentCat.properties);
+      catInfo = parentCat;
+      console.log("catInfo: ", catInfo);
+      console.log("properties: ", propertiesToFill);
+    }
+    // console.log("catInfo: ", catInfo);
+    // console.log("category: ", category);
+  }
+
   return (
     <form onSubmit={saveProduct}>
       <label> Product Name</label>
@@ -102,6 +143,25 @@ export default function ProductForm({
           ))}
       </select>
 
+      {/* properites */}
+      {propertiesToFill.length > 0 &&
+        propertiesToFill.map((p) => (
+          <div className="flex gap-2" key={p.index}>
+            {p.name}
+            <select
+              value={productProperties[p.name]}
+              onChange={(ev) => prodProperties(p.name, ev.target.value)}
+            >
+              <option value="">Select Value</option>
+              {p.values.map((p) => (
+                <option value={p}> {p}</option>
+              ))}
+            </select>
+            {printInstant(p)}{" "}
+          </div>
+        ))}
+
+      {/* Photos Section  */}
       <label>Photos</label>
       <div className=" items-center gap-1 flex flex-wrap mb-2">
         <ReactSortable
