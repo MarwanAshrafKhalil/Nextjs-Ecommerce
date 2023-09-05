@@ -109,7 +109,9 @@ export default function ProductForm({
   const propertiesToFill = [];
   if (categories.length > 0 && category) {
     let catInfo = categories.find(({ _id }) => _id === category);
-    propertiesToFill.push(...catInfo.properties);
+    if (catInfo?.properties) {
+      propertiesToFill.push(...catInfo.properties);
+    }
     while (catInfo?.parent?._id) {
       const parentCat = categories.find(
         ({ _id }) => _id === catInfo.parent._id
@@ -154,7 +156,10 @@ export default function ProductForm({
             >
               <option value="">Select Value</option>
               {p.values.map((p) => (
-                <option value={p}> {p}</option>
+                <option key={p.index} value={p}>
+                  {" "}
+                  {p}
+                </option>
               ))}
             </select>
             {printInstant(p)}{" "}
