@@ -2,21 +2,21 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-function Nav(props) {
+function Nav({show}) {
+  console.log(show)
   const inactiveLink = "flex gap-2 p-1";
-  const activeLink = inactiveLink + " bg-white text-blue-900 rounded-l-lg p-1";
-
+  const activeLink = inactiveLink + " bg-highlight text-black rounded-l-lg p-1";
+  const inactiveIcon = "w-6 h-6"
+  const activeIcon = inactiveIcon + ' text-primary'
   const router = useRouter();
   const { pathname } = router;
-  // console.log({router},router.pathname)
-
   async function logOut() {
     await router.push("/");
     signOut();
   }
 
   return (
-    <aside className=" text-white p-4 pr-0">
+    <aside className={(show? "left-0 ":"-left-full") +" top-0 text-gray-500 p-4 pr-0 w-full fixed bg-gray-50 h-full md:static md:w-auto"}>
       <Link href="/" className="flex gap-2 mb-4 pr-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,9 +39,7 @@ function Nav(props) {
       {/* NAVIGATION */}
 
       <nav className="flex flex-col gap-2">
-        <Link
-          href={"/"}
-          className={pathname === "/" ? activeLink : inactiveLink}
+        <Link href={"/"} className={pathname === "/" ? activeLink : inactiveLink}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +47,7 @@ function Nav(props) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+           className={pathname === "/" ? activeIcon : inactiveIcon}
           >
             <path
               strokeLinecap="round"
@@ -70,7 +68,7 @@ function Nav(props) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className={pathname.includes("/products") ? activeIcon : inactiveIcon}
           >
             <path
               strokeLinecap="round"
@@ -92,7 +90,9 @@ function Nav(props) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className={
+              pathname.includes("/categories") ? activeIcon : inactiveIcon
+            }
           >
             <path
               strokeLinecap="round"
@@ -113,7 +113,7 @@ function Nav(props) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className={pathname.includes("/orders") ? activeIcon : inactiveIcon}
           >
             <path
               strokeLinecap="round"
@@ -134,7 +134,7 @@ function Nav(props) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className={pathname.includes("/settings") ? activeIcon : inactiveIcon}
           >
             <path
               strokeLinecap="round"
@@ -157,7 +157,7 @@ function Nav(props) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="w-6 h-6"
+            className={inactiveIcon}
           >
             <path
               strokeLinecap="round"
