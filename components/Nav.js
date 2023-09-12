@@ -1,13 +1,14 @@
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Logo from "./Logo";
 
-function Nav({show}) {
-  console.log(show)
+function Nav({ show }) {
+  console.log(show);
   const inactiveLink = "flex gap-2 p-1";
   const activeLink = inactiveLink + " bg-highlight text-black rounded-l-lg p-1";
-  const inactiveIcon = "w-6 h-6"
-  const activeIcon = inactiveIcon + ' text-primary'
+  const inactiveIcon = "w-6 h-6";
+  const activeIcon = inactiveIcon + " text-primary";
   const router = useRouter();
   const { pathname } = router;
   async function logOut() {
@@ -16,30 +17,22 @@ function Nav({show}) {
   }
 
   return (
-    <aside className={(show? "left-0 ":"-left-full") +" top-0 text-gray-500 p-4 pr-0 w-full fixed bg-gray-50 h-full md:static md:w-auto"}>
-      <Link href="/" className="flex gap-2 mb-4 pr-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
-          />
-        </svg>
-
-        <span>TechShopy Admin</span>
-      </Link>
+    <aside
+      className={
+        (show ? "left-0 " : "-left-full") +
+        " top-0 text-gray-500 p-4 pr-0 w-full fixed bg-gray-50 h-full md:static md:w-auto transition-all"
+      }
+    >
+      <div className="mb-4 pr-2">
+        <Logo />
+      </div>
 
       {/* NAVIGATION */}
 
       <nav className="flex flex-col gap-2">
-        <Link href={"/"} className={pathname === "/" ? activeLink : inactiveLink}
+        <Link
+          href={"/"}
+          className={pathname === "/" ? activeLink : inactiveLink}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +40,7 @@ function Nav({show}) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-           className={pathname === "/" ? activeIcon : inactiveIcon}
+            className={pathname === "/" ? activeIcon : inactiveIcon}
           >
             <path
               strokeLinecap="round"
@@ -68,7 +61,9 @@ function Nav({show}) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className={pathname.includes("/products") ? activeIcon : inactiveIcon}
+            className={
+              pathname.includes("/products") ? activeIcon : inactiveIcon
+            }
           >
             <path
               strokeLinecap="round"
@@ -134,7 +129,9 @@ function Nav({show}) {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className={pathname.includes("/settings") ? activeIcon : inactiveIcon}
+            className={
+              pathname.includes("/settings") ? activeIcon : inactiveIcon
+            }
           >
             <path
               strokeLinecap="round"
