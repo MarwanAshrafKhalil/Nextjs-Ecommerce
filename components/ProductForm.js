@@ -148,8 +148,8 @@ export default function ProductForm({
       {/* properites */}
       {propertiesToFill.length > 0 &&
         propertiesToFill.map((p) => (
-          <div className="flex gap-2" key={p.index}>
-            {p.name}
+          <div className=" gap-2" key={p.index}>
+            <label className="">{p.name}</label>
             <select
               value={productProperties[p.name]}
               onChange={(ev) => prodProperties(p.name, ev.target.value)}
@@ -157,7 +157,6 @@ export default function ProductForm({
               <option value="">Select Value</option>
               {p.values.map((p) => (
                 <option key={p.index} value={p}>
-                  {" "}
                   {p}
                 </option>
               ))}
@@ -176,7 +175,10 @@ export default function ProductForm({
         >
           {!!images?.length &&
             images.map((link) => (
-              <div key={link} className="  h-24 mx-2 ">
+              <div
+                key={link}
+                className="  h-24 mx-2 border border-200 rounded-lg shadow-sm bg-white "
+              >
                 <img src={link} alt="" className="rounded-lg" />
               </div>
             ))}
@@ -187,9 +189,10 @@ export default function ProductForm({
           </div>
         )}
         <label
-          className="  w-24 h-24 flex cursor-pointer
+          className="  w-24 h-24 flex flex-col  cursor-pointer
         justify-center gap-1 text-gray-500
-        mx-2 my-2 items-center text-sm rounded-lg bg-gray-200 "
+        mx-2 my-2 items-center text-sm 
+        rounded-lg shadow-sm bg-white border border-gray-200 "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +208,7 @@ export default function ProductForm({
               d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"
             />
           </svg>
-          Upload
+          Add Image
           <input type="file" onChange={uploadImages} className="hidden" />
         </label>
 

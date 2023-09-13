@@ -16,10 +16,7 @@ function Products(props) {
 
   return (
     <Layout>
-      <Link
-        className="bg-blue-900 pt-2 rounded-lg py-2 px-2 text-white"
-        href={"/products/new"}
-      >
+      <Link className="btn-primary text-white" href={"/products/new"}>
         {" "}
         Add new product
       </Link>
@@ -36,7 +33,10 @@ function Products(props) {
             <tr key={product._id}>
               <td>{product.title}</td>
               <td>
-                <Link href={"/products/edit/" + product._id}>
+                <Link
+                  className="btn-default"
+                  href={"/products/edit/" + product._id}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -54,7 +54,10 @@ function Products(props) {
                   Edit
                 </Link>
 
-                <Link href={"/products/delete/" + product._id}>
+                <Link
+                  className="btn-red"
+                  href={"/products/delete/" + product._id}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
