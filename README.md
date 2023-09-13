@@ -2,12 +2,12 @@ E-commerce project using Nextjs <br />
 
 The project is in the building phase <br />
 
-## Admin side ![](https://geps.dev/progress/80) :
+## Admin side ![](https://geps.dev/progress/100) :
 Products Management  &nbsp; &nbsp;    ![](https://geps.dev/progress/100) <br />
 Categories Management  &nbsp; &nbsp;   ![](https://geps.dev/progress/100) <br />
 Security  &nbsp; &nbsp;   ![](https://geps.dev/progress/100) <br />
 Security  &nbsp; &nbsp;   ![](https://geps.dev/progress/100) <br />
-Responsive Design  &nbsp; &nbsp;   ![](https://geps.dev/progress/0) <br />
+Responsive Design  &nbsp; &nbsp;   ![](https://geps.dev/progress/100) <br />
 
 ## User side ![](https://geps.dev/progress/0):  <br />
 Featured Products &nbsp; &nbsp; ![](https://geps.dev/progress/0)  <br />
