@@ -15,7 +15,7 @@ const initialState = {
 };
 
 export const createProduct = createAsyncThunk(
-  "products/createProduct",
+  "productsData/createProduct",
   async ({ data }, { rejectWithValue }) => {
     try {
       const response = await axios.post("/api/products", data);
@@ -29,7 +29,7 @@ export const createProduct = createAsyncThunk(
 );
 
 export const getProducts = createAsyncThunk(
-  "products/getProducts",
+  "productsData/getProducts",
   async (userId, { rejectWithValue }) => {
     try {
       const response = await axios.get("/api/categories");
@@ -41,7 +41,7 @@ export const getProducts = createAsyncThunk(
 );
 
 export const getProduct = createAsyncThunk(
-  "products/getProduct",
+  "productsData/getProduct",
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get("/api/products?id=" + id);
@@ -53,7 +53,7 @@ export const getProduct = createAsyncThunk(
 );
 
 export const updateProduct = createAsyncThunk(
-  "products/updateProduct",
+  "productsData/updateProduct",
   async ({ _id: id, data }, { rejectWithValue }) => {
     try {
       const response = await axios.put("/api/products", { ...data, _id });
@@ -67,7 +67,7 @@ export const updateProduct = createAsyncThunk(
 );
 
 export const deleteProduct = createAsyncThunk(
-  "products/deleteProduct",
+  "productsData/deleteProduct",
   async ({ id, toast }, { rejectWithValue }) => {
     try {
       const response = await axios.delete("/api/products?id=" + id);
@@ -83,23 +83,83 @@ export const productSlice = createSlice({
   name: "productsData",
   initialState: initialState,
   reducers: {
-    catchError: (state, action) => {
-      state.error = action.payload;
+    // catchError: (state, action) => {
+    //   state.error = action.payload;
+    // },
+    // setProductsData: (state, action) => {
+    //   let data = action.payload;
+    //   // await axios.put("/api/products", { ...data, _id })
+    // },
+    // updateProductsData: (state, action) => {
+    //   let data = action.payload;
+    //   // axios.post("/api/products", data)
+    // },
+    // deleteProductsData: (state, action) => {
+    //   let data = action.payload; // need to get the id
+    //   // await axios.delete("/api/products?id=" + id);
+    // },
+  },
+  extraReducers: {
+    [createProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [createProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.data = [action.payload];
+    },
+    [createProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [getProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.userTours = action.payload;
+    },
+    [getProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
     },
 
-    setProductsData: (state, action) => {
-      let data = action.payload;
-      // await axios.put("/api/products", { ...data, _id })
+    [updateProduct.pending]: (state, action) => {
+      state.loading = true;
     },
-
-    updateProductsData: (state, action) => {
-      let data = action.payload;
-      // axios.post("/api/products", data)
+    [updateProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.userTours = state.userTours.map((item) =>
+          item._id === id ? action.payload : item
+        );
+        state.tours = state.tours.map((item) =>
+          item._id === id ? action.payload : item
+        );
+      }
     },
-
-    deleteProductsData: (state, action) => {
-      let data = action.payload; // need to get the id
-      // await axios.delete("/api/products?id=" + id);
+    [updateProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [deleteProduct.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [deleteProduct.fulfilled]: (state, action) => {
+      state.loading = false;
+      const {
+        arg: { id },
+      } = action.meta;
+      if (id) {
+        state.userTours = state.userTours.filter((item) => item._id !== id);
+        state.tours = state.tours.filter((item) => item._id !== id);
+      }
+    },
+    [deleteProduct.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
     },
   },
 });
