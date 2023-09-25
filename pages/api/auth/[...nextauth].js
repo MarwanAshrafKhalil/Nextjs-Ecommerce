@@ -21,9 +21,7 @@ export const authOptions = {
       if (isAllowedToSignIn) {
         return true;
       } else {
-        
-         
-        // todo need to add route to the homepage in case of false validation        
+        // todo need to add route to the homepage in case of false validation
         return false;
       }
     },
