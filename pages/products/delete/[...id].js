@@ -6,16 +6,20 @@ import { useEffect, useState } from "react";
 export default function DeleteProduct() {
   const router = useRouter();
   const { id } = router.query;
-  const [productInfo, setProductInfo] = useState();
+  // const [productInfo, setProductInfo] = useState();
 
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    axios.get("/api/products?id=" + id).then((response) => {
-      setProductInfo(response.data);
-    });
-  }, [id]);
+  // useEffect(() => {
+  //   if (!id) {
+  //     return;
+  //   }
+  //   axios.get("/api/products?id=" + id).then((response) => {
+  //     setProductInfo(response.data);
+  //   });
+  // }, [id]);
+
+  const productItem = useSelector((state) => state.products.data).find(
+    (data) => data._id == id
+  );
 
   async function deleteProduct() {
     await axios.delete("/api/products?id=" + id);

@@ -1,18 +1,26 @@
+import { getProducts } from "@/Redux/features/products-slice/productsSlice";
 import Layout from "@/components/Layout";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function Products(props) {
   const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get("/api/products").then((response) => {
-      setProducts(response.data);
-      console.log("prod: ", products);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(getProducts());
   }, []);
+
+  const productsFetch = useSelector((state) => state.products.data);
+
+  useEffect(() => {
+    setProducts(productsFetch);
+  }, [productsFetch]);
+
+  // console.log("productsFetch: ", productsFetch);
+  // console.log("setProducts: ", { products });
 
   return (
     <Layout>
@@ -29,7 +37,7 @@ function Products(props) {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {products?.map((product) => (
             <tr key={product._id}>
               <td>{product.title}</td>
               <td>

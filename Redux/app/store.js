@@ -10,10 +10,10 @@ import productsReducer from "../features/products-slice/productsSlice";
 // const logger = reduxLogger.createLogger();
 const store = configureStore({
   reducer: {
-    cake: cakeReducer,
-    icecream: icecreamReducers,
-    user: userReducer,
-    product: productsReducer,
+    // cake: cakeReducer,
+    // icecream: icecreamReducers,
+    // user: userReducer,
+    products: productsReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
