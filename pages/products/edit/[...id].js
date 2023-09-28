@@ -28,7 +28,7 @@ export default function EditProductPage() {
   const productItem = useSelector((state) => state.products.data).find(
     (data) => data._id == id
   );
-  console.log(productItem);
+  console.log("prodItem: ", productItem);
 
   return (
     <Layout>

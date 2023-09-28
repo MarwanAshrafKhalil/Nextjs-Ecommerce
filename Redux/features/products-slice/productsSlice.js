@@ -6,13 +6,14 @@ const initialState = {
   data: [],
   newProduct: {},
   loading: false,
-  updatedProduct: {},
+  updatedProduct: false,
   error: "",
 };
 
 export const createProduct = createAsyncThunk(
   "productsData/createProduct",
   async ({ data }, { rejectWithValue }) => {
+    console.log("data: ", data);
     try {
       return await axios.post("/api/products", data).then((response) => {
         // console.log(response.data);
@@ -24,6 +25,26 @@ export const createProduct = createAsyncThunk(
   }
 );
 
+export const updateProduct = createAsyncThunk(
+  "productsData/updateProduct",
+  async ({ data, _id }, { rejectWithValue }) => {
+    try {
+      // console.log("id: ", _id, " data: ", data);
+
+      return await axios
+        .put("/api/products", { ...data, _id })
+        .then((response) => {
+          // console.log(response);
+          return response.data;
+        });
+    } catch (err) {
+      throw new Error(
+        error.response?.data?.message || "Failed to update product"
+      );
+    }
+  }
+);
+
 export const getProducts = createAsyncThunk(
   "productsData/getProducts",
   async (_, { rejectWithValue }) => {
@@ -31,27 +52,6 @@ export const getProducts = createAsyncThunk(
       return await axios.get("/api/products").then((response) => response.data);
     } catch (err) {
       return rejectWithValue(err.response, data);
-    }
-  }
-);
-
-export const updateProduct = createAsyncThunk(
-  "productsData/updateProduct",
-  async ({ id, data }, { rejectWithValue }) => {
-    try {
-      conosle.log("id: ", id, " data: ", data);
-      return await axios
-        .put("/api/products", { ...data, id })
-        .then((response) => {
-          conosle.log(response);
-          return response.data;
-        });
-    } catch (err) {
-      if (err.response && err.response.data) {
-        return rejectWithValue(err.response.data);
-      } else {
-        return rejectWithValue({ message: "Failed to update product" });
-      }
     }
   }
 );
@@ -112,11 +112,11 @@ export const productSlice = createSlice({
     },
     [updateProduct.fulfilled]: (state, action) => {
       state.loading = false;
-      state.updatedProduct = action.payload;
+      // state.updatedProduct = action.payload;
     },
     [updateProduct.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload.message;
+      state.error = action.error.message;
     },
 
     [deleteProduct.pending]: (state, action) => {

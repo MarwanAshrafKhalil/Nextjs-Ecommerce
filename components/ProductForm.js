@@ -1,14 +1,13 @@
-import axios from "axios";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import Spinner from "./Spinner";
-import { ReactSortable } from "react-sortablejs";
-import { useDispatch } from "react-redux";
 import {
   createProduct,
   updateProduct,
 } from "@/Redux/features/products-slice/productsSlice";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { ReactSortable } from "react-sortablejs";
+import Spinner from "./Spinner";
 
 export default function ProductForm({
   _id,
@@ -37,7 +36,6 @@ export default function ProductForm({
     try {
       axios.get("/api/categories").then((result) => {
         setCategories(result.data);
-        // console.log("REs-prod: ", result.data);
       });
     } catch (error) {
       console.log(error);
@@ -58,7 +56,8 @@ export default function ProductForm({
     try {
       if (_id) {
         //update Product
-        dispatch(updateProduct({ ...data, _id }));
+        console.log({ ...data, _id });
+        dispatch(updateProduct({ data, _id }));
 
         // await axios.put("/api/products", { ...data, _id });
         // console.log("res.update ", res);
