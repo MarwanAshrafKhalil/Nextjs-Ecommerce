@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 // const { getDefaultMiddleware } = require("@reduxjs/toolkit");
 import productsReducer from "../features/products-slice/productsSlice";
+import categoriesReducer from "../features/categories/categoriesSlice";
 
 // const reduxLogger = require("redux-logger");
 
@@ -11,6 +12,7 @@ const store = configureStore({
     // icecream: icecreamReducers,
     // user: userReducer,
     products: productsReducer,
+    categories: categoriesReducer,
   },
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

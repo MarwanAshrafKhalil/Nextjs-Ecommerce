@@ -5,9 +5,10 @@ import {
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReactSortable } from "react-sortablejs";
 import Spinner from "./Spinner";
+import { getCategories } from "@/Redux/features/categories/categoriesSlice";
 
 export default function ProductForm({
   _id,
@@ -32,15 +33,22 @@ export default function ProductForm({
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const categoriesFetch = useSelector((state) => state.categories.data);
+
   useEffect(() => {
-    try {
-      axios.get("/api/categories").then((result) => {
-        setCategories(result.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+    setCategories(categoriesFetch);
+  }, [categoriesFetch]);
+
+  // useEffect(() => {
+  //   try {
+
+  //     axios.get("/api/categories").then((result) => {
+  //       setCategories(result.data);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
 
   async function saveProduct(ev) {
     ev.preventDefault();
@@ -56,7 +64,6 @@ export default function ProductForm({
     try {
       if (_id) {
         //update Product
-        console.log({ ...data, _id });
         dispatch(updateProduct({ data, _id }));
 
         // await axios.put("/api/products", { ...data, _id });

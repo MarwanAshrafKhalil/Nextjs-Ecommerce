@@ -1,6 +1,8 @@
+import { getCategories } from "@/Redux/features/categories/categoriesSlice";
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { withSwal } from "react-sweetalert2";
 
 function Categories({ swal }) {
@@ -10,20 +12,20 @@ function Categories({ swal }) {
   const [editedCategory, setEditedCategory] = useState(null);
   const [properties, setProperties] = useState([]);
 
+  const dispatch = useDispatch();
+
+  const categoriesFetch = useSelector((state) => state.Categories.data);
+
+  useEffect(() => {
+    setCategories(categoriesFetch);
+  }, [categoriesFetch]);
+
   useEffect(() => {
     fetchCategories();
   }, []);
 
   function fetchCategories() {
-    try {
-      axios.get("/api/categories").then((result) => {
-        setCategories(result.data);
-
-        // console.log("REs: ", result);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(getCategories());
   }
 
   async function saveCategory(ev) {
