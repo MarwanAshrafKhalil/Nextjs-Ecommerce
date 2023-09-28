@@ -4,6 +4,11 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
+import { useDispatch } from "react-redux";
+import {
+  createProduct,
+  updateProduct,
+} from "@/Redux/features/products-slice/productsSlice";
 
 export default function ProductForm({
   _id,
@@ -26,12 +31,13 @@ export default function ProductForm({
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState(existingCategory || "");
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
       axios.get("/api/categories").then((result) => {
         setCategories(result.data);
-        console.log("REs-prod: ", result.data);
+        // console.log("REs-prod: ", result.data);
       });
     } catch (error) {
       console.log(error);
@@ -51,12 +57,15 @@ export default function ProductForm({
 
     try {
       if (_id) {
-        //update
-        await axios.put("/api/products", { ...data, _id });
+        //update Product
+        dispatch(updateProduct({ ...data, _id }));
+
+        // await axios.put("/api/products", { ...data, _id });
         // console.log("res.update ", res);
       } else {
-        //create
-        await axios.post("/api/products", data);
+        //create Product
+        dispatch(createProduct({ data }));
+        // await axios.post("/api/products", data);
         // console.log("res.post: ", res);
       }
       setGoToProducts(true);
@@ -80,7 +89,7 @@ export default function ProductForm({
       }
 
       const res = await axios.post("/api/upload", data);
-      console.log("res.data: ", res.data.links);
+      // console.log("res.data: ", res.data.links);
 
       setImages((oldImages) => {
         return [...oldImages, ...res.data.links];
@@ -101,10 +110,10 @@ export default function ProductForm({
     });
   }
 
-  function printInstant(x) {
-    console.log("print: ", x);
-    console.log("print1: ", { ...prodProperties });
-  }
+  // function printInstant(x) {
+  //   console.log("print: ", x);
+  //   console.log("print1: ", { ...prodProperties });
+  // }
 
   const propertiesToFill = [];
   if (categories.length > 0 && category) {
@@ -161,7 +170,7 @@ export default function ProductForm({
                 </option>
               ))}
             </select>
-            {printInstant(p)}{" "}
+            {/* {printInstant(p)}{" "} */}
           </div>
         ))}
 

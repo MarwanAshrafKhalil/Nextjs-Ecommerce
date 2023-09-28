@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import Logo from "./Logo";
 
 function Nav({ show }) {
-  console.log(show);
   const inactiveLink = "flex gap-2 p-1";
   const activeLink = inactiveLink + " bg-highlight text-black rounded-l-lg p-1";
   const inactiveIcon = "w-6 h-6";
