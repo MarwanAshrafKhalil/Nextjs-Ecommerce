@@ -14,12 +14,6 @@ function Categories({ swal }) {
 
   const dispatch = useDispatch();
 
-  const categoriesFetch = useSelector((state) => state.Categories.data);
-
-  useEffect(() => {
-    setCategories(categoriesFetch);
-  }, [categoriesFetch]);
-
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -27,6 +21,12 @@ function Categories({ swal }) {
   function fetchCategories() {
     dispatch(getCategories());
   }
+
+  const categoriesFetch = useSelector((state) => state.categories.data);
+
+  // useEffect(() => {
+  //   setCategories(categoriesFetch);
+  // }, [categoriesFetch]);
 
   async function saveCategory(ev) {
     ev.preventDefault();
@@ -51,9 +51,9 @@ function Categories({ swal }) {
     fetchCategories();
   }
 
-  function printDebugging(x) {
-    console.log("length", x);
-  }
+  // function printDebugging(x) {
+  //   console.log("length", x);
+  // }
 
   function editCategory(category) {
     setEditedCategory(category);
@@ -232,8 +232,8 @@ function Categories({ swal }) {
             </tr>
           </thead>
           <tbody>
-            {categories.length > 0 &&
-              categories.map((category) => (
+            {categoriesFetch.length > 0 &&
+              categoriesFetch.map((category) => (
                 <tr key={category._id}>
                   <td>{category.name}</td>
                   <td>{category?.parent?.name} </td>
