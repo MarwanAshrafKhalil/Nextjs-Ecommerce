@@ -11,7 +11,7 @@ const initialState = {
 };
 
 export const createProduct = createAsyncThunk(
-  "productsData/createProduct",
+  "products/createProduct",
   async ({ data }, { rejectWithValue }) => {
     console.log("data: ", data);
     try {
@@ -26,7 +26,7 @@ export const createProduct = createAsyncThunk(
 );
 
 export const updateProduct = createAsyncThunk(
-  "productsData/updateProduct",
+  "products/updateProduct",
   async ({ data, _id }, { rejectWithValue }) => {
     try {
       // console.log("id: ", _id, " data: ", data);
@@ -46,7 +46,7 @@ export const updateProduct = createAsyncThunk(
 );
 
 export const getProducts = createAsyncThunk(
-  "productsData/getProducts",
+  "products/getProducts",
   async (_, { rejectWithValue }) => {
     try {
       return await axios.get("/api/products").then((response) => response.data);
@@ -57,7 +57,7 @@ export const getProducts = createAsyncThunk(
 );
 
 export const deleteProduct = createAsyncThunk(
-  "productsData/deleteProduct",
+  "products/deleteProduct",
   async ({ id }) => {
     return await axios.delete("/api/products?id=" + id).then((response) => {
       // console.log(response);

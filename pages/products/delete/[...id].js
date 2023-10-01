@@ -24,8 +24,8 @@ export default function DeleteProduct() {
     (data) => data._id == id
   );
 
-  function deleteProd() {
-    dispatch(deleteProduct({ id }));
+  async function deleteProd() {
+    await dispatch(deleteProduct({ id }));
     goBack();
   }
 

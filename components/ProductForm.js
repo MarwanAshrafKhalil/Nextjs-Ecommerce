@@ -64,13 +64,13 @@ export default function ProductForm({
     try {
       if (_id) {
         //update Product
-        dispatch(updateProduct({ data, _id }));
+        await dispatch(updateProduct({ data, _id }));
 
         // await axios.put("/api/products", { ...data, _id });
         // console.log("res.update ", res);
       } else {
         //create Product
-        dispatch(createProduct({ data }));
+        await dispatch(createProduct({ data }));
         // await axios.post("/api/products", data);
         // console.log("res.post: ", res);
       }

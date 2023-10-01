@@ -23,4 +23,5 @@ Product Page &nbsp; &nbsp; ![](https://geps.dev/progress/0) <br />
 the page is redirected to products then the item is removed not the viceversa
 Sometimes the getProduct is called before the createProduct is fulfilled
 How to edit productForm
+Check await keyboard before dispatch for post and put
 -->

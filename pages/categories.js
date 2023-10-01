@@ -1,4 +1,9 @@
-import { getCategories } from "@/Redux/features/categories/categoriesSlice";
+import {
+  createCategory,
+  deleteACategory,
+  getCategories,
+  updateCategory,
+} from "@/Redux/features/categories/categoriesSlice";
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -40,10 +45,13 @@ function Categories({ swal }) {
     };
     if (editedCategory) {
       data._id = editedCategory._id;
-      await axios.put("/api/categories", data);
+      console.log("data-cat: ", data);
+      await dispatch(updateCategory({ data }));
+      // await axios.put("/api/categories", data);
       setEditedCategory(null);
     } else {
-      await axios.post("/api/categories", data);
+      await dispatch(createCategory({ data }));
+      // await axios.post("/api/categories", data);
     }
     setName("");
     setParentCategory("");
@@ -83,7 +91,8 @@ function Categories({ swal }) {
         console.log(result);
         if (result.isConfirmed) {
           const _id = category._id;
-          await axios.delete("/api/categories?=id" + _id);
+          await dispatch(deleteACategory({ _id }));
+          // await axios.delete("/api/categories?=id" + _id);
           fetchCategories();
         }
       })
@@ -148,8 +157,8 @@ function Categories({ swal }) {
             value={parentCategory}
           >
             <option value="">Select Parent</option>
-            {categories.length > 0 &&
-              categories.map((category) => (
+            {categoriesFetch.length > 0 &&
+              categoriesFetch.map((category, index) => (
                 <option key={category._id} value={category._id}>
                   {category.name}
                 </option>
@@ -171,7 +180,7 @@ function Categories({ swal }) {
           </button>
           {properties.length > 0 &&
             properties.map((property, index) => (
-              <div key={property.index} className="flex mb-2 gap-1">
+              <div key={index} className="flex mb-2 gap-1">
                 <input
                   value={property.name}
                   onChange={(ev) =>

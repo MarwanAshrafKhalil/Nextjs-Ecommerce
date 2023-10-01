@@ -1,3 +1,4 @@
+import { getCategories } from "@/Redux/features/categories/categoriesSlice";
 import { getProducts } from "@/Redux/features/products-slice/productsSlice";
 import Layout from "@/components/Layout";
 import axios from "axios";
@@ -13,6 +14,7 @@ function Products(props) {
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getCategories());
   }, []);
 
   useEffect(() => {
