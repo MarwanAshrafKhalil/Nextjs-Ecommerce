@@ -1,7 +1,6 @@
 import { getCategories } from "@/Redux/features/categories/categoriesSlice";
 import { getProducts } from "@/Redux/features/products-slice/productsSlice";
 import Layout from "@/components/Layout";
-import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,9 +21,6 @@ function Products(props) {
   }, [productsFetch]);
 
   console.log("prodFetch2: ", productsFetch, "products: ", products);
-
-  // console.log("productsFetch: ", productsFetch);
-  // console.log("setProducts: ", { products });
 
   return (
     <Layout>

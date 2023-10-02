@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//https://dev.to/julfikarhaidar/redux-toolkit-crud-example-with-react-hooks-4d98
 const initialState = {
   data: [],
   newCategory: {},
@@ -19,7 +18,6 @@ export const createCategory = createAsyncThunk(
       return await axios
         .post("/api/categories", { ...data })
         .then((response) => {
-          // console.log(response.data);
           return response.data;
         });
     } catch (err) {
@@ -37,7 +35,6 @@ export const updateCategory = createAsyncThunk(
       return await axios
         .put("/api/categories", { ...data })
         .then((response) => {
-          // console.log(response);
           return response.data;
         });
     } catch (err) {

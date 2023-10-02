@@ -6,7 +6,7 @@ export default async function handle(req, res) {
   const { method } = req;
   await mongooseConnect();
   await isAdminRequest(req, res);
-  console.log("req: ", req.body);
+  // console.log("req: ", req.body);
 
   if (method == "GET") {
     res.json(await Category.find().populate("parent"));
@@ -24,8 +24,6 @@ export default async function handle(req, res) {
   }
 
   if (method === "PUT") {
-    // console.log(req.body);
-
     const { name, parentCategory, properties, _id } = req.body;
     const categoryDoc = await Category.updateOne(
       { _id },
