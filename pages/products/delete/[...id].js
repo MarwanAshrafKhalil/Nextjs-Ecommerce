@@ -1,4 +1,4 @@
-import { deleteProduct } from "@/Redux/features/products-slice/productsSlice";
+import { deleteProduct } from "@/Redux/features/products-slice/productsActions";
 import Layout from "@/components/Layout";
 import axios from "axios";
 import { useRouter } from "next/router";

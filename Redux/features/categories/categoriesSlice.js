@@ -1,129 +1,50 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
   newCategory: {},
-  loading: false,
-  updatedCategory: false,
-  CategoryDeleted: "",
+  isLoading: false,
+  categoryUpdated: false,
+  categoryDeleted: "",
   error: "",
 };
 
-export const createCategory = createAsyncThunk(
-  "categories/createCategory",
-  async ({ data }, { rejectWithValue }) => {
-    console.log("data: ", data);
-    try {
-      return await axios
-        .post("/api/categories", { ...data })
-        .then((response) => {
-          return response.data;
-        });
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const updateCategory = createAsyncThunk(
-  "categories/updateCategory",
-  async ({ data }, { rejectWithValue }) => {
-    try {
-      console.log(" data: ", data);
-
-      return await axios
-        .put("/api/categories", { ...data })
-        .then((response) => {
-          return response.data;
-        });
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const getCategories = createAsyncThunk(
-  "categories/getCategories",
-  async (_, { rejectWithValue }) => {
-    try {
-      return await axios
-        .get("/api/categories")
-        .then((response) => response.data);
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const deleteACategory = createAsyncThunk(
-  "categories/deleteACategory",
-  async ({ _id }, { rejectWithValue }) => {
-    try {
-      console.log("the id: ", _id);
-      return await axios
-        .delete("/api/categories?=id" + _id)
-        .then((response) => response.data);
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
-export const categorySlice = createSlice({
+export const categoriesSlice = createSlice({
   name: "categories",
   initialState: initialState,
-  reducers: {},
-  extraReducers: {
-    [createCategory.pending]: (state, action) => {
-      state.loading = true;
+  reducers: {
+    openLoader: (state) => {
+      state.isLoading = true;
     },
-    [createCategory.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.newCategory = action.payload;
-    },
-    [createCategory.rejected]: (state, action) => {
-      state.loading = false;
+
+    catchError: (state, action) => {
       state.error = action.payload.message;
     },
 
-    [getCategories.pending]: (state, action) => {
-      state.loading = true;
+    closeLoader: (state) => {
+      state.isLoading = false;
     },
-    [getCategories.fulfilled]: (state, action) => {
-      state.loading = false;
+
+    //get
+    fetchCategories: (state, action) => {
       state.data = action.payload;
     },
-    [getCategories.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
+
+    //create
+    createCategory: (state, action) => {
+      state.newCategory = action.payload;
     },
 
-    [updateCategory.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [updateCategory.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.updatedCategory = action.payload;
-    },
-    [updateCategory.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
+    //update
+    updateCategory: (state, action) => {
+      state.categoryUpdated = action.payload;
     },
 
-    [deleteACategory.pending]: (state, action) => {
-      state.loading = true;
-    },
-    [deleteACategory.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.CategoryDeleted = action.payload;
-    },
-
-    [deleteACategory.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
+    //delete
+    deleteCategory: (state, action) => {
+      state.categoryDeleted = action.payload;
     },
   },
 });
 
-export default categorySlice.reducer;
+export default categoriesSlice.reducer;

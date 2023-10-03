@@ -24,4 +24,7 @@ the page is redirected to products then the item is removed not the viceversa
 Sometimes the getProduct is called before the createProduct is fulfilled
 How to edit productForm
 Check await keyboard before dispatch for post and put
+
+
+#### the await keyword in categories before dispatch for creating with and without diff
 -->

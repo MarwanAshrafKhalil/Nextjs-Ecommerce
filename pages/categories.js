@@ -3,19 +3,20 @@ import {
   deleteACategory,
   getCategories,
   updateCategory,
-} from "@/Redux/features/categories/categoriesSlice";
+} from "@/Redux/features/categories/categoriesActions";
 import Layout from "@/components/Layout";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MoonLoader } from "react-spinners";
 import { withSwal } from "react-sweetalert2";
 
 function Categories({ swal }) {
   const [name, setName] = useState("");
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [parentCategory, setParentCategory] = useState("");
   const [editedCategory, setEditedCategory] = useState(null);
   const [properties, setProperties] = useState([]);
+  const isLoading = useSelector((state) => state.categories.isLoading);
 
   const dispatch = useDispatch();
 
@@ -28,10 +29,6 @@ function Categories({ swal }) {
   }
 
   const categoriesFetch = useSelector((state) => state.categories.data);
-
-  // useEffect(() => {
-  //   setCategories(categoriesFetch);
-  // }, [categoriesFetch]);
 
   async function saveCategory(ev) {
     ev.preventDefault();
@@ -46,22 +43,17 @@ function Categories({ swal }) {
     if (editedCategory) {
       data._id = editedCategory._id;
       console.log("data-cat: ", data);
-      await dispatch(updateCategory({ data }));
-      // await axios.put("/api/categories", data);
+      dispatch(updateCategory({ data }));
+
       setEditedCategory(null);
     } else {
       await dispatch(createCategory({ data }));
-      // await axios.post("/api/categories", data);
     }
     setName("");
     setParentCategory("");
     setProperties([]);
     fetchCategories();
   }
-
-  // function printDebugging(x) {
-  //   console.log("length", x);
-  // }
 
   function editCategory(category) {
     setEditedCategory(category);
@@ -91,8 +83,8 @@ function Categories({ swal }) {
         console.log(result);
         if (result.isConfirmed) {
           const _id = category._id;
-          await dispatch(deleteACategory({ _id }));
-          // await axios.delete("/api/categories?=id" + _id);
+          console.log(_id);
+          await dispatch(deleteACategory(_id));
           fetchCategories();
         }
       })
@@ -231,7 +223,13 @@ function Categories({ swal }) {
         </div>
       </form>
 
-      {!editedCategory && (
+      {isLoading && (
+        <div className="flex justify-center items-center  h-screen ">
+          {<MoonLoader color="#5542f6" />}
+        </div>
+      )}
+
+      {!editedCategory && !isLoading && (
         <table className="basic">
           <thead>
             <tr>

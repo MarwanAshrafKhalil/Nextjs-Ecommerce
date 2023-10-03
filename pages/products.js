@@ -1,14 +1,18 @@
-import { getCategories } from "@/Redux/features/categories/categoriesSlice";
-import { getProducts } from "@/Redux/features/products-slice/productsSlice";
+import { getCategories } from "@/Redux/features/categories/categoriesActions";
+import { getProducts } from "@/Redux/features/products-slice/productsActions";
+
 import Layout from "@/components/Layout";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { MoonLoader } from "react-spinners";
 
 function Products(props) {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const productsFetch = useSelector((state) => state.products.data);
+  const isLoading = useSelector((state) => state.products.isLoading);
+
   console.log("prodFetch1: ", productsFetch, "products: ", products);
 
   useEffect(() => {
@@ -28,6 +32,11 @@ function Products(props) {
         Add new product
       </Link>
 
+      {isLoading && (
+        <div className="flex justify-center items-center h-screen">
+          {<MoonLoader color="#5542f6" />}
+        </div>
+      )}
       <table className="basic">
         <thead>
           <tr>
