@@ -52,10 +52,10 @@ export const updateCategory =
       });
   };
 
-export const deleteACategory = (_id) => (dispatch) => {
-  console.log("id-delete: ", { _id });
+export const deleteACategory = (_id) => async (dispatch) => {
+  console.log("id-delete: ", _id);
   dispatch(categoriesActions.openLoader());
-  requestFromServer
+  await requestFromServer
     .deleteCategory(_id)
     .then((response) => {
       dispatch(categoriesActions.deleteCategory(response.data));

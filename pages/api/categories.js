@@ -6,7 +6,7 @@ export default async function handle(req, res) {
   const { method } = req;
   await mongooseConnect();
   await isAdminRequest(req, res);
-  // console.log("req: ", req.body);
+  console.log("req: ", req);
 
   if (method == "GET") {
     res.json(await Category.find().populate("parent"));
@@ -38,7 +38,7 @@ export default async function handle(req, res) {
 
   if (method === "DELETE") {
     const { _id } = req.query;
-    const categoryDoc = await Category.deleteOne(_id);
+    const categoryDoc = await Category.deleteOne({ _id });
     res.json("True");
   }
 }

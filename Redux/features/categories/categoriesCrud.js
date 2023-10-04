@@ -15,5 +15,5 @@ export function updateCategory({ data }) {
 
 export function deleteCategory(_id) {
   console.log(_id);
-  return axios.delete("/api/categories?id=" + _id);
+  return axios.delete("/api/categories?_id=" + _id);
 }
